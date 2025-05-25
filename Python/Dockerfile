@@ -1,15 +1,15 @@
-FROM python:3.12-slim
+FROM python:3.10-bullseye
 WORKDIR /app
 LABEL authors="admin"
 
+COPY requirements/deps.txt .
+
+RUN python -m venv /venv
+ENV PATH="/venv/bin:$PATH"
+
+RUN pip install -r deps.txt
+
 COPY . .
-
-RUN python -m venv ./.venv
-
-COPY deps.txt .
-
-RUN . ./.venv/bin/activate && \
-    pip install -r requirements/deps.txt
 
 EXPOSE 8080
 
